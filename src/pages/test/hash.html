@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+</head>
+<body>
+    <button type='button' onclick="history.go(-1)">返回</button>
+    <ul>
+        <li onclick="Router.replace('/')">首页</li>
+        <li onclick="Router.replace('/news')">新闻</li>
+        <li onclick="Router.replace('/shop')">商城</li>
+    </ul>
+    <div id='app'></div>
+    <script>
+        function RouteClass() {
+            this.routes = {}
+            this.curUrl = ''
+            this.eventHashRouter()
+        }
+
+        RouteClass.prototype.route = function(path, callback){
+            console.log(path, callback)
+            this.routes[path] = callback || function(){}
+        }
+
+        RouteClass.prototype.eventHashRouter = function(){
+            window.addEventListener("load", this.hashRouter.bind(this))
+            window.addEventListener('hashchange', this.hashRouter.bind(this))
+        }
+
+        RouteClass.prototype.hashRouter = function(){
+            this.curUrl = window.location.hash.slice(1) || '/'
+            this.routes[this.curUrl]()
+        }
+
+        RouteClass.prototype.replace = function(url) {
+            url = '#' + url
+            window.location.replace(url)
+        }
+
+        var Router = new RouteClass()
+        var app = document.getElementById('app')
+        Router.route('/',function(){
+            app.innerHTML = '首页'
+        })
+        Router.route('/news',function(){
+            app.innerHTML = '新闻'
+        })
+        Router.route('/shop',function(){
+            app.innerHTML = '商城'
+        })
+
+    </script>
+</body>
+</html>
