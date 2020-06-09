@@ -26,11 +26,24 @@ export const menuList = [
                 content:'草稿箱',
                 key:'article-drafts',
                 path:'/article/drafts'
+            }
+        ]
+    },
+    {
+        title:'标签管理',
+        key:'tag-manage',
+        icon:'HddOutlined',
+        content:'标签管理',
+        child:[
+            {
+                content:'标签列表',
+                key:'tag-list',
+                path:'/tag/list'
             },
             {
-                content:'标签管理',
-                key:'article-tags',
-                path:'/article/tags'
+                content:'添加标签',
+                key:'tag-add',
+                path:'/tag/add'
             }
         ]
     },

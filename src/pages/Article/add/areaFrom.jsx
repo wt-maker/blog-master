@@ -35,8 +35,6 @@ const md = new MarkdownIt({
     }
 })
 const AreaForm = (props) => {
-
-    const content = props.editContent
     
     // 编辑画面预览画面同步
     const changeScrollTop = () => {
@@ -66,15 +64,16 @@ const AreaForm = (props) => {
         })
     }
 
-    const {setEditContent, setPreviewContent} = props
+    const {editContent, previewContent, setEditContent, setPreviewContent} = props
     const previewRef = useRef(null)
     const editRef = useRef(null)
 
     // 画面初期加载
     useEffect(() => {
         changeScrollTop()
-        if(content) {
-            editRef.current.innerHTML = content
+        if(editContent) {
+            editRef.current.innerHTML = editContent
+            previewRef.current.innerHTML = previewContent
         }
     })
 

@@ -1,10 +1,17 @@
 import React from 'react'
-import { Form, Input, Row, Col } from 'antd'
+import { Form, Input, Row, Col, Select } from 'antd'
+const { Option } = Select
+const InputForm = () => {
 
-const InputForm = (props) => {
-    
-    const { title, tag, keywords, description } = props.article
-    const t = props.article.title
+    const children = [];
+    for (let i = 10; i < 36; i++) {
+        children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+    }
+    console.log(children)
+    function handleChange(value) {
+        console.log(`selected ${value}`);
+    }
+
     return (
         <React.Fragment>
             <Row>
@@ -13,9 +20,8 @@ const InputForm = (props) => {
                         name='title'
                         label='标题'
                         rules={[{ required: true, message: '请输入标题' }]}
-                        initialValue = {t}
                     >
-                        <Input />
+                        <Input placeholder="请输入标题"/>
                     </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -23,9 +29,16 @@ const InputForm = (props) => {
                         name='tag'
                         label='标签'
                         rules={[{ required: true, message: '请输入标签' }]}
-                        initialValue = {tag}
                     >
-                        <Input />
+                        <Select
+                            mode="multiple"
+                            style={{ width: '100%' }}
+                            placeholder="请选择标签"
+                            defaultValue={[]}
+                            onChange={handleChange}
+                        >
+                            {children}
+                        </Select>
                     </Form.Item>
                 </Col>
             </Row>
@@ -35,9 +48,8 @@ const InputForm = (props) => {
                         name='keywords'
                         label='关键字'
                         rules={[{ required: true, message: '请输入关键字' }]}
-                        initialValue = {keywords}
                     >
-                        <Input />
+                        <Input placeholder="请输入关键字"/>
                     </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -45,9 +57,8 @@ const InputForm = (props) => {
                         name='description'
                         label='描述'
                         rules={[{ required: true, message: '请输入文章描述' }]}
-                        initialValue = {description}
                     >
-                        <Input />
+                        <Input placeholder="请输入文章描述"/>
                     </Form.Item>
                 </Col>
             </Row>

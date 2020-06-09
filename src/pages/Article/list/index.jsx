@@ -74,7 +74,6 @@ const  ArticleList = (props) => {
 
         axios.get('/api/getArticles').then(
             (res)=>{
-                console.log(1)
                 setArticle(res.data.res)
             },
             ({response})=>{
