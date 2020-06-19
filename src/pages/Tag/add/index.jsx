@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import {withRouter} from 'react-router-dom'
 import { Form, Input, PageHeader, Button, Col, Row } from 'antd'
 import { CirclePicker } from 'react-color'
-import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 const layout = {
     labelCol: { span: 4 },
@@ -19,10 +19,8 @@ const TagAdd = (props) => {
             color:color
         }
         axios.post('/api/addTag', request_body).then(
-            (response)=>{
-                //console.log("success", response)
+            ()=>{
                 props.history.push('/tag/list')
-
             },
             ({response}) => {
                 console.log(response)
@@ -30,7 +28,7 @@ const TagAdd = (props) => {
         )
     }
 
-    const handleCorlorChange = (color) => {
+    const handleChangeColor = (color) => {
         setColor(color.hex)
     }
     return (
@@ -53,7 +51,7 @@ const TagAdd = (props) => {
                         name='color'
                         label='颜色'
                     >
-                        <CirclePicker color={color}  onChange={handleCorlorChange} />
+                        <CirclePicker color={color}  onChange={handleChangeColor} />
                     </Form.Item>
                 </Col>
             </Row>
