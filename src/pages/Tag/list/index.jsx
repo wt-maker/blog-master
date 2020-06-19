@@ -1,5 +1,6 @@
-import React, { useState, useEffect} from 'react';
-import { Table, Input, InputNumber, Popconfirm, Form, PageHeader } from 'antd';
+import React, { useState, useEffect} from 'react'
+import { Table, Input, Popconfirm, Form, PageHeader } from 'antd'
+import { CirclePicker } from 'react-color'
 import dayjs from 'dayjs'
 import axios from 'axios'
 
@@ -9,11 +10,16 @@ const EditableCell = ({
     title,
     inputType,
     record,
-    index,
     children,
+    setColor,
+    color,
     ...restProps
 }) => {
-    const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+
+    const handleChangeColor = (color) => {
+        setColor(color.hex)
+    }
+    const inputNode = inputType == 'color' ? <CirclePicker color={color} onChange={handleChangeColor} /> : <Input />
     return (
         <td {...restProps}>
             {editing ? (
@@ -25,7 +31,7 @@ const EditableCell = ({
                     rules={[
                         {
                             required: true,
-                            message: `Please Input ${title}!`,
+                            message: `请输入${title}!`,
                         },
                     ]}
                 >
@@ -43,7 +49,7 @@ const ArticleTags = () => {
     const [form] = Form.useForm();
     const [data, setData] = useState([]);
     const [editingKey, setEditingKey] = useState('');
-
+    const [color, setColor] = useState('')
     const isEditing = record => record._id === editingKey;
 
     useEffect(()=>{
@@ -56,23 +62,26 @@ const ArticleTags = () => {
                 console.log(response)
             }
         )
-    },[editingKey])
+    },[editingKey,color])
 
     const edit = record => {
         form.setFieldsValue({
             ...record,
         })
         setEditingKey(record._id);
-    };
+        setColor(record.color)
+    }
 
     const cancel = () => {
         setEditingKey('');
-    };
+    }
 
     const save = async record => {
         let row = await form.validateFields();
+        console.log(row)
         let request_body = {
-            ...row,
+            name:row.name,
+            color:color,
             update_dt:Date.now()
         }
         
@@ -82,10 +91,23 @@ const ArticleTags = () => {
                     setEditingKey('')
                 }
             )
-        } catch (errInfo) {
-            console.log('Validate Failed:', errInfo);
+        } catch (error) {
+            console.log('Validate Failed:', error);
         }
-    };
+    }
+
+    const deleteTag = async id => {
+        console.log(id)
+        try {
+            axios.get(`/api/deleteTag/${id}`).then(
+                ()=>{
+                    setEditingKey('')
+                }
+            )
+        } catch (error) {
+            
+        }
+    }
 
     const columns = [
         {
@@ -107,7 +129,6 @@ const ArticleTags = () => {
             dataIndex: 'update_dt',
             key: 'update_dt',
             width: '15%',
-            editable: false,
             render: (text)=><div>{dayjs(text).format('YYYY-MM-DD HH:mm:ss')}</div>
         },
         {
@@ -124,33 +145,42 @@ const ArticleTags = () => {
                                 marginRight: 8,
                             }}
                         >
-                            Save
+                            保存
                         </a>
                         <Popconfirm title="确认取消?" onConfirm={cancel}>
-                            <a>Cancel</a>
+                            <a>取消</a>
                         </Popconfirm>
                     </span>
                 ) : (
-                        <a disabled={editingKey !== ''} onClick={() => edit(record)}>
-                            Edit
-                        </a>
+                        <span>
+                            <a disabled={editingKey !== ''} onClick={() => edit(record)}>
+                                修改
+                            </a>
+                            <Popconfirm title="确认删除?" onConfirm={deleteTag(record._id)}>
+                                <a>删除</a>
+                            </Popconfirm>
+                        </span>
                     );
             },
         },
     ];
     const mergedColumns = columns.map(col => {
         if (!col.editable) {
-            return col;
+            return {
+                ...col
+            }
         }
 
         return {
             ...col,
             onCell: record => ({
                 record,
-                inputType: col.dataIndex === 'age' ? 'number' : 'text',
+                inputType: col.dataIndex === 'color' ? 'color' : 'text',
                 dataIndex: col.dataIndex,
                 title: col.title,
                 editing: isEditing(record),
+                setColor:setColor,
+                color
             }),
         };
     });
