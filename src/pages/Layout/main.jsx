@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import ArticleAdd from '../Article/add'
 import ArticleDrafts from '../Article/drafts'
 import ArticleList from '../Article/list'
+import ArticlePreview from '../Article/preview'
 import TagList from '../Tag/list'
 import TagAdd from '../Tag/add'
 import SourceAdd from '../Source/add'
@@ -20,6 +21,7 @@ export default class Main extends React.Component {
                         <Route path='/article/list' component={ArticleList}></Route>
                         <Route path='/article/add' component={ArticleAdd}></Route>
                         <Route path='/article/drafts' component={ArticleDrafts}></Route>
+                        <Route path='/article/preview' component={ArticlePreview}></Route>
                         <Route path='/tag/list' component={TagList}></Route>
                         <Route path='/tag/add' component={TagAdd}></Route>
                         <Route path='/source/list' component={SourceAdd}></Route>

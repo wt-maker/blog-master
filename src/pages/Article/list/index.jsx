@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react'
-import { Table, Tag, Space, PageHeader} from 'antd'
-import {withRouter} from 'react-router-dom' 
+import React, { useState, useEffect } from 'react'
+import { Table, Tag, Space, PageHeader,Popconfirm } from 'antd'
+import { withRouter } from 'react-router-dom'
 import dayjs from 'dayjs'
 import axios from 'axios'
-const  ArticleList = (props) => {
+const ArticleList = (props) => {
     const columns = [
         {
             title: 'No.',
             key: 'no',
             width: 20,
-            render: (text,record,dataIndex) => <span>{dataIndex+1}</span>
+            render: (text, record, dataIndex) => <span>{dataIndex + 1}</span>
         },
         {
             title: '标题',
@@ -21,7 +21,19 @@ const  ArticleList = (props) => {
             title: '标签',
             dataIndex: 'tag',
             key: 'tag',
-            width: 300
+            width: 300,
+            render: (text) => {
+                return (
+                <div>
+                    {text.map(tag => {
+                        return (
+                            <Tag color={tag.color} key={tag.color}>
+                                {tag.name}
+                            </Tag>
+                        )
+                    })}
+                </div>)
+            }
         },
         {
             title: '关键字',
@@ -34,59 +46,64 @@ const  ArticleList = (props) => {
             dataIndex: 'update_dt',
             key: 'description',
             width: 250,
-            render: (text)=><div>{dayjs(text).format('YYYY-MM-DD HH:mm:ss')}</div>
+            render: (text) => <div>{dayjs(text).format('YYYY-MM-DD HH:mm:ss')}</div>
         },
         {
             title: '操作',
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a>预览</a>
-                    <a onClick={()=>editArticle(record._id)}>编辑</a>
-                    <a onClick={()=>deleteArticle(record._id)}>删除</a>
+                    <a onClick={() => previewArticle(record._id)}>预览</a>
+                    <a onClick={() => editArticle(record._id)}>编辑</a>
+                    <Popconfirm title="确认删除?" onConfirm={() => deleteArticle(record._id)}>
+                        <a>删除</a>
+                    </Popconfirm>
                 </Space>
             ),
         },
     ];
 
-    const deleteArticle = (_id) => {
-        axios.get(`/api/delete/${_id}`).then(
-            (res)=>{
+    const deleteArticle = (id) => {
+        axios.get(`/api/delete/${id}`).then(
+            () => {
                 setLoading(true)
             },
-            ({response}) => {
+            ({ response }) => {
                 console.log(response)
             }
         )
     }
 
-    const editArticle = (_id) => {
-        props.history.push(`/article/add?id=${_id}`)
+    const editArticle = (id) => {
+        props.history.push(`/article/add?id=${id}`)
+    }
+
+    const previewArticle = (id) => {
+        props.history.push(`/article/preview?id=${id}`)
     }
 
     const [article, setArticle] = useState([])
     const [loading, setLoading] = useState(false)
     // useEffect的不作为componentDidUnmount的话
     //传入第二个参数时一定注意：第二个参数不能为引用类型，引用类型比较不出来数据的变化，会造成死循环
-    useEffect(()=>{
+    useEffect(() => {
 
         setLoading(true)
 
         axios.get('/api/getArticles').then(
-            (res)=>{
+            (res) => {
                 setArticle(res.data.res)
             },
-            ({response})=>{
+            ({ response }) => {
                 console.log(response)
             }
         )
         setLoading(false)
-    },[loading])
-
+    }, [loading])
     return (
         <section>
             <PageHeader className="site-page-header" title="文章列表" />
-            <Table columns={columns} rowKey={record => record._id} dataSource={article} bordered='true'/>
+            <Table columns={columns} rowKey={record => record._id} dataSource={article} bordered='true' />
         </section>
     )
 }

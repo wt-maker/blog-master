@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import { Form, Input, PageHeader, Button, Col, Row } from 'antd'
 import { CirclePicker } from 'react-color'

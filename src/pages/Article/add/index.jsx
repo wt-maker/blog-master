@@ -18,10 +18,18 @@ const ArticleAdd = (props) => {
     const [pageTitle, setPageTitle] = useState('')
     const [editContent, setEditContent] = useState('')
     const [previewContent, setPreviewContent] = useState('')
+    const [tags, setTags] = useState([])
     const params = new URLSearchParams(props.location.search)
 
     let location = useLocation()
     useEffect(() => {
+
+        axios.get('/api/getAllTags').then(
+            (res) => {
+                setTags(res.data.res)
+            }
+        )
+
         let id = params.get('id')
         if (id) {
             setPageTitle('编辑文章')
@@ -30,8 +38,12 @@ const ArticleAdd = (props) => {
                     let article = res.data.res
                     setEditContent(article.editContent)
                     setPreviewContent(article.previewContent)
+                    let tags = article.tag.map(item => item.name)
                     form.setFieldsValue({
-                        ...article
+                        title: article.title,
+                        keywords: article.keywords,
+                        description: article.description,
+                        tag:tags
                     })
                 }
             )
@@ -65,23 +77,24 @@ const ArticleAdd = (props) => {
             }
         )
     }
-
     const onFinish = values => {
-        console.log(values)
-        
         let id = params.get('id')
-        const article = { ...values, editContent, previewContent }
+        values.tag = tags.filter(item=>values.tag.includes(item.name)).map(item => item._id)
+
+        let article = { ...values, editContent, previewContent }
+        console.log(article)
+        
         if (id) {
             editArticle(article, id)
         } else {
             addArticle(article)
         }
     }
-
+    
     return (
         <Form {...layout} onFinish={onFinish} form={form}>
             <PageHeader className="site-page-header" title={pageTitle} />
-            <InputForm />
+            <InputForm tags={tags}/>
             <AreaForm editContent={editContent} previewContent={previewContent} setEditContent={setEditContent} setPreviewContent={setPreviewContent} />
             <ButtonForm />
         </Form>

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState} from 'react'
 import { Row, Col } from 'antd'
 import 'highlight.js/styles/vs2015.css'
 import 'github-markdown-css/github-markdown.css'
@@ -35,7 +35,7 @@ const md = new MarkdownIt({
     }
 })
 const AreaForm = (props) => {
-    
+
     // 编辑画面预览画面同步
     const changeScrollTop = () => {
 
@@ -67,13 +67,14 @@ const AreaForm = (props) => {
     const {editContent, previewContent, setEditContent, setPreviewContent} = props
     const previewRef = useRef(null)
     const editRef = useRef(null)
-
+    const [loading, setLoading] = useState(false)
     // 画面初期加载
     useEffect(() => {
         changeScrollTop()
-        if(editContent) {
+        if (loading === false && editContent && previewContent) {
             editRef.current.innerHTML = editContent
             previewRef.current.innerHTML = previewContent
+            setLoading(true)
         }
     })
 
@@ -82,7 +83,6 @@ const AreaForm = (props) => {
         previewRef.current.innerHTML = previewHtml
         setEditContent(e.target.innerText)
         setPreviewContent(previewHtml)
-        changeScrollTop()
     }
     return (
         <React.Fragment>
@@ -96,6 +96,7 @@ const AreaForm = (props) => {
                             style={childStyle}
                             ref={editRef}
                         >
+                        
                         </div>
                     </div>
                 </Col>
@@ -106,6 +107,7 @@ const AreaForm = (props) => {
                             style={childStyle}
                             ref={previewRef}
                         >
+
                         </div>
                     </div>
                 </Col>

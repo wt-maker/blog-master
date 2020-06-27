@@ -14,7 +14,7 @@ export default class PageLayout extends React.Component {
     };
     render() {
         return (
-            <Layout style={{ minHeight: '100vh' }}>
+            <Layout style={{ minHeight: '100vh'}}>
                 <Side />
                 <Main />
             </Layout>

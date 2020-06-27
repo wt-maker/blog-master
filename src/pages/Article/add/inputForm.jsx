@@ -1,15 +1,21 @@
 import React from 'react'
-import { Form, Input, Row, Col, Select } from 'antd'
-const { Option } = Select
-const InputForm = () => {
+import { Form, Input, Row, Col, Select, Tag } from 'antd'
 
-    const children = [];
-    for (let i = 10; i < 36; i++) {
-        children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-    }
-    console.log(children)
-    function handleChange(value) {
-        console.log(`selected ${value}`);
+const { Option } = Select
+const InputForm = (props) => {
+
+    const tags = props.tags
+
+    const options = tags.map((item) => <Option key={item.name}>{item.name}</Option>)
+
+    const tagRender = (props) =>{
+        let { label, value, closable, onClose } = props;
+        let tag = tags.filter(item => item.name===value)[0]
+        return (
+            <Tag color={tag.color} closable={closable} onClose={onClose} style={{ marginRight: 3 }}>
+                {label}
+            </Tag>
+        )
     }
 
     return (
@@ -21,23 +27,22 @@ const InputForm = () => {
                         label='标题'
                         rules={[{ required: true, message: '请输入标题' }]}
                     >
-                        <Input placeholder="请输入标题"/>
+                        <Input placeholder="请输入标题" />
                     </Form.Item>
                 </Col>
                 <Col span={12}>
                     <Form.Item
                         name='tag'
                         label='标签'
-                        rules={[{ required: true, message: '请输入标签' }]}
+                        rules={[{ required: true, message: '请选择标签' }]}
                     >
                         <Select
                             mode="multiple"
                             style={{ width: '100%' }}
                             placeholder="请选择标签"
-                            defaultValue={[]}
-                            onChange={handleChange}
+                            tagRender={tagRender}
                         >
-                            {children}
+                            {options}
                         </Select>
                     </Form.Item>
                 </Col>
@@ -49,7 +54,7 @@ const InputForm = () => {
                         label='关键字'
                         rules={[{ required: true, message: '请输入关键字' }]}
                     >
-                        <Input placeholder="请输入关键字"/>
+                        <Input placeholder="请输入关键字" />
                     </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -58,7 +63,7 @@ const InputForm = () => {
                         label='描述'
                         rules={[{ required: true, message: '请输入文章描述' }]}
                     >
-                        <Input placeholder="请输入文章描述"/>
+                        <Input placeholder="请输入文章描述" />
                     </Form.Item>
                 </Col>
             </Row>
