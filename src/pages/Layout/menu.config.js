@@ -62,6 +62,11 @@ export const menuList = [
                 content:'添加源码',
                 key:'source-add',
                 path:'/source/add'
+            },
+            {
+                content:'fund管理',
+                key:'fund-list',
+                path:'/fund/list'
             }
         ]
     }

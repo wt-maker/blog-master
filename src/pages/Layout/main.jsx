@@ -8,6 +8,7 @@ import TagList from '../Tag/list'
 import TagAdd from '../Tag/add'
 import SourceAdd from '../Source/add'
 import SourceList from '../Source/list'
+import FundList from '../fund/list'
 import { Switch, Route } from 'react-router-dom'
 
 const { Content, Footer } = Layout;
@@ -26,6 +27,8 @@ export default class Main extends React.Component {
                         <Route path='/tag/add' component={TagAdd}></Route>
                         <Route path='/source/list' component={SourceAdd}></Route>
                         <Route path='/source/add' component={SourceList}></Route>
+                        <Route path='/fund/list' component={FundList}></Route>
+
                     </Switch>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>wt blog</Footer>

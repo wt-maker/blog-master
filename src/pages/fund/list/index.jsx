@@ -44,7 +44,7 @@ const EditableCell = ({
     );
 };
 
-const ArticleTags = () => {
+const FundList = () => {
 
     const [form] = Form.useForm();
     const [data, setData] = useState([]);
@@ -85,7 +85,6 @@ const ArticleTags = () => {
             color: color,
             update_dt: Date.now()
         }
-
         try {
             axios.post(`/api/updateTag/${record._id}`, request_body).then(
                 () => {
@@ -226,4 +225,4 @@ const ArticleTags = () => {
         </Form>
     )
 }
-export default ArticleTags
+export default FundList
