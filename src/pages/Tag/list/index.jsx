@@ -44,7 +44,7 @@ const EditableCell = ({
     );
 };
 
-const ArticleTags = () => {
+const TagList = () => {
 
     const [form] = Form.useForm();
     const [data, setData] = useState([]);
@@ -52,17 +52,20 @@ const ArticleTags = () => {
     const [color, setColor] = useState('')
     const [updateFlg, setUpdateFlg] = useState(false)
     const isEditing = record => record._id === editingKey;
-
+    var _ummount = false
     useEffect(() => {
         axios.get('/api/getAllTags').then(
             (response) => {
-                let tags = response.data.res
-                setData(tags)
+                if (!_ummount) {
+                    let tags = response.data.res
+                    setData(tags)
+                }
             },
             ({ response }) => {
                 console.log(response)
             }
         )
+        return () => _ummount = true
     }, [editingKey, color, updateFlg])
 
     const edit = record => {
@@ -79,7 +82,6 @@ const ArticleTags = () => {
 
     const save = async record => {
         let row = await form.validateFields();
-        console.log(row)
         let request_body = {
             name: row.name,
             color: color,
@@ -89,7 +91,9 @@ const ArticleTags = () => {
         try {
             axios.post(`/api/updateTag/${record._id}`, request_body).then(
                 () => {
-                    setEditingKey('')
+                    if (!_ummount) {
+                        setEditingKey('')
+                    }
                 }
             )
         } catch (error) {
@@ -102,7 +106,9 @@ const ArticleTags = () => {
         try {
             axios.get(`/api/deleteTag/${id}`).then(
                 () => {
-                    setUpdateFlg(!updateFlg)
+                    if (!_ummount) {
+                        setUpdateFlg(!updateFlg)
+                    }
                 }
             )
         } catch (error) {
@@ -226,4 +232,4 @@ const ArticleTags = () => {
         </Form>
     )
 }
-export default ArticleTags
+export default TagList

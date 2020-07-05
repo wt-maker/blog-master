@@ -22,6 +22,7 @@ const ArticleAdd = (props) => {
     const params = new URLSearchParams(props.location.search)
 
     let location = useLocation()
+    var _ummount = false
     useEffect(() => {
 
         axios.get('/api/getAllTags').then(
@@ -35,21 +36,24 @@ const ArticleAdd = (props) => {
             setPageTitle('编辑文章')
             axios.get(`/api/get/${id}`).then(
                 (res) => {
-                    let article = res.data.res
-                    setEditContent(article.editContent)
-                    setPreviewContent(article.previewContent)
-                    let tags = article.tag.map(item => item.name)
-                    form.setFieldsValue({
-                        title: article.title,
-                        keywords: article.keywords,
-                        description: article.description,
-                        tag:tags
-                    })
+                    if (!_ummount) {
+                        let article = res.data.res
+                        setEditContent(article.editContent)
+                        setPreviewContent(article.previewContent)
+                        let tags = article.tag.map(item => item.name)
+                        form.setFieldsValue({
+                            title: article.title,
+                            keywords: article.keywords,
+                            description: article.description,
+                            tag:tags
+                        })
+                    }
                 }
             )
         } else {
             setPageTitle('添加文章')
         }
+        return () => _ummount = true
     }, [location])
 
     const addArticle = (article) => {
@@ -82,7 +86,6 @@ const ArticleAdd = (props) => {
         values.tag = tags.filter(item=>values.tag.includes(item.name)).map(item => item._id)
 
         let article = { ...values, editContent, previewContent }
-        console.log(article)
         
         if (id) {
             editArticle(article, id)

@@ -86,19 +86,24 @@ const ArticleList = (props) => {
     const [loading, setLoading] = useState(false)
     // useEffect的不作为componentDidUnmount的话
     //传入第二个参数时一定注意：第二个参数不能为引用类型，引用类型比较不出来数据的变化，会造成死循环
+    var _ummount = false
     useEffect(() => {
 
         setLoading(true)
 
         axios.get('/api/getArticles').then(
             (res) => {
-                setArticle(res.data.res)
+                if (!_ummount) {
+                    setArticle(res.data.res)
+                }
             },
             ({ response }) => {
                 console.log(response)
             }
         )
         setLoading(false)
+
+        return () => _ummount = true
     }, [loading])
     return (
         <section>

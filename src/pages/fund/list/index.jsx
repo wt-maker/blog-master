@@ -1,62 +1,58 @@
 import React, { useState, useEffect } from 'react'
-import { Table, PageHeader } from 'antd'
+import { Table, PageHeader, Col } from 'antd'
 import { withRouter } from 'react-router-dom'
+import { fundColumns } from './config'
 import axios from 'axios'
 const FundList = (props) => {
-    const columns = [
-        {
-            title: 'No.',
-            key: 'no',
-            width: 20,
-            render: (text, record, dataIndex) => <span>{dataIndex + 1}</span>
-        },
-        {
-            title: 'serialNumber',
-            dataIndex: 'serialNumber',
-            key: 'serialNumber',
-            width: 300
-        },
-        {
-            title: 'fundName',
-            dataIndex: 'name',
-            key: 'name',
-            width: 300
-        },
-        {
-            title: 'position',
-            dataIndex: 'position',
-            key: 'position',
-            width: 300
-        },
-        {
-            title: 'applies',
-            dataIndex: 'applies',
-            key: 'applies',
-            width: 300
-        }
-    ]
 
     const [fund, setFund] = useState([])
+    const [cost, setCost] = useState(0)
+    const [income, setIncome] = useState(0)
     const [loading, setLoading] = useState(false)
-
+    var _ummount = false
     useEffect(() => {
 
         setLoading(true)
-
         axios.get('/api/getAllFund').then(
             (res) => {
-                console.log(res)
-                setFund(res.data.res.fundList)
+                if (!_ummount) {
+                    setFund(res.data.res.fundList)
+
+                    setCost(res.data.res.fundList.reduce((pre, cur) => {
+                        return pre + cur.position
+                    }, 0))
+
+                    setIncome(res.data.res.fundList.reduce((pre, cur) => {
+                        return pre + cur.position * parseFloat(cur.applies) * 0.01
+                    }, 0))
+                }
             }
         )
         setLoading(false)
-    }, [loading])
-    return (
-        <section>
-            <PageHeader className="site-page-header" title="fund列表" />
-            <Table columns={columns} rowKey={record => record.serialNumber} dataSource={fund} bordered='true' />
-        </section>
-    )
+
+        return () => _ummount = true
+}, [loading])
+return (
+    <section>
+        <PageHeader className="site-page-header" title="fund列表" />
+        <Col span={8}>
+            <Table
+                columns={fundColumns}
+                rowKey={record => record.serialNumber}
+                dataSource={fund}
+                bordered='true'
+                size='small'
+                summary={() => (
+                    <Table.Summary.Row>
+                        <Table.Summary.Cell colSpan={3} index={0}>合计</Table.Summary.Cell>
+                        <Table.Summary.Cell index={1}>{cost}</Table.Summary.Cell>
+                        <Table.Summary.Cell index={2}>{income}</Table.Summary.Cell>
+                    </Table.Summary.Row>
+                )}
+            />
+        </Col>
+    </section>
+)
 }
 
 export default withRouter(FundList)
