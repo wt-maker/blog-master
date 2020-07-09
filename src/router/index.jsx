@@ -8,10 +8,15 @@ import TagAdd from '../pages/Tag/add'
 import SourceAdd from '../pages/Source/add'
 import SourceList from '../pages/Source/list'
 import FundList from '../pages/Fund/list'
+import LoginPage from '../pages/Login'
 import { Route } from 'react-router-dom'
 import React from 'react'
 
 export const routes = [
+    {
+        path: '/login',
+        component: LoginPage
+    },
     {
         path: '/',
         component: PageLayout,
