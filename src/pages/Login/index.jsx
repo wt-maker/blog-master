@@ -2,10 +2,22 @@ import React from 'react'
 import { Layout, Row, Col, Input, Form, Button } from 'antd'
 import { UserOutlined, LockOutlined, DownloadOutlined } from '@ant-design/icons';
 import './login.scss'
+
+const axios = require('axios')
+
 const LoginPage = (props) => {
 
-    const onFinish = (values) => {
-        console.log(values)
+    const onFinish = (data) => {
+        axios.post('/api/getUserByName', data).then(
+            (response) => {
+                if(response.status === 200) {
+                    props.history.push('/')
+                }
+            },
+            ({response}) => {
+                console.log(response)
+            }
+        )
     }
     return (
         <Form onFinish={onFinish} layout='horizontal' className="addTag">
