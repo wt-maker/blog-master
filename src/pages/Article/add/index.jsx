@@ -4,7 +4,7 @@ import { Form, PageHeader } from 'antd'
 import InputForm from './inputForm'
 import AreaForm from './areaFrom'
 import ButtonForm from './buttonForm'
-import axios from 'axios'
+import { getArticleById, addArticle, updateArticle, getTags } from '../../../utils/api'
 import { useLocation } from 'react-router-dom'
 
 const layout = {
@@ -25,16 +25,18 @@ const ArticleAdd = (props) => {
     var _ummount = false
     useEffect(() => {
 
-        axios.get('/api/getAllTags').then(
+        getTags().then(
             (res) => {
-                setTags(res.data.res)
+                if (!_ummount) {
+                    setTags(res.data.res)
+                }
             }
         )
 
         let id = params.get('id')
         if (id) {
             setPageTitle('编辑文章')
-            axios.get(`/api/get/${id}`).then(
+            getArticleById(id).then(
                 (res) => {
                     if (!_ummount) {
                         let article = res.data.res
@@ -56,8 +58,8 @@ const ArticleAdd = (props) => {
         return () => _ummount = true
     }, [location])
 
-    const addArticle = (article) => {
-        axios.post('/api/addArticle', article).then(
+    const saveArticle = (article) => {
+        addArticle(article).then(
             () => {
                 props.history.push('/article/list')
             },
@@ -72,7 +74,7 @@ const ArticleAdd = (props) => {
             ...article,
             update_dt:Date.now()
         }
-        axios.post(`/api/update/${id}`, article).then(
+        updateArticle(id, article).then(
             () => {
                 props.history.push('/article/list')
             },
@@ -90,7 +92,7 @@ const ArticleAdd = (props) => {
         if (id) {
             editArticle(article, id)
         } else {
-            addArticle(article)
+            saveArticle(article)
         }
     }
     

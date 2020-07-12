@@ -10,6 +10,7 @@ import SourceList from '../pages/Source/list'
 import FundList from '../pages/Fund/list'
 import LoginPage from '../pages/Login'
 import { Route } from 'react-router-dom'
+import loginStatus from '../utils/login'
 import React from 'react'
 
 export const routes = [
@@ -61,12 +62,23 @@ export const routes = [
     }
 ]
 
-export const RouteWithSubRoutes = (route) => (
-    <Route 
-        path={route.path}
-        render={props => (
-            <route.component {...props} {...route}/>
-        )}
-    />
-)
+export const RouteWithSubRoutes = (route) => {
 
+    return (
+        <Route
+            path={route.path}
+            render={props => {
+                if (loginStatus()) {
+                    return (
+                        <route.component {...props} {...route} />
+                    )
+                } else {
+                    return (
+                        <LoginPage {...props}/>
+                    )
+                }
+            }
+            }
+        />
+    )
+}

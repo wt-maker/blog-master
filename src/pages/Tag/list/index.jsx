@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Input, Popconfirm, Form, PageHeader, Space } from 'antd'
 import { CirclePicker } from 'react-color'
+import { getTags, updateTagById, deleteTagById } from '../../../utils/api'
 import dayjs from 'dayjs'
-import axios from 'axios'
 
 const EditableCell = ({
     editing,
@@ -42,7 +42,7 @@ const EditableCell = ({
                 )}
         </td>
     );
-};
+}
 
 const TagList = () => {
 
@@ -54,7 +54,7 @@ const TagList = () => {
     const isEditing = record => record._id === editingKey;
     var _ummount = false
     useEffect(() => {
-        axios.get('/api/getAllTags').then(
+        getTags().then(
             (response) => {
                 if (!_ummount) {
                     let tags = response.data.res
@@ -62,7 +62,6 @@ const TagList = () => {
                 }
             },
             ({ response }) => {
-                console.log(response)
             }
         )
         return () => _ummount = true
@@ -89,7 +88,7 @@ const TagList = () => {
         }
 
         try {
-            axios.post(`/api/updateTag/${record._id}`, request_body).then(
+            updateTagById(record._id, request_body).then(
                 () => {
                     if (!_ummount) {
                         setEditingKey('')
@@ -97,14 +96,12 @@ const TagList = () => {
                 }
             )
         } catch (error) {
-            console.log('Validate Failed:', error);
         }
     }
 
     const deleteTag = async id => {
-        console.log(id)
         try {
-            axios.get(`/api/deleteTag/${id}`).then(
+            deleteTagById(id).then(
                 () => {
                     if (!_ummount) {
                         setUpdateFlg(!updateFlg)
@@ -112,7 +109,6 @@ const TagList = () => {
                 }
             )
         } catch (error) {
-
         }
     }
 

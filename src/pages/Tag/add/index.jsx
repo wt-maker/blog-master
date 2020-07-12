@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import { Form, Input, PageHeader, Button, Col, Row } from 'antd'
 import { CirclePicker } from 'react-color'
-import axios from 'axios'
+import { addTag } from '../../../utils/api'
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
@@ -18,7 +18,7 @@ const TagAdd = (props) => {
             name:tag,
             color:color
         }
-        axios.post('/api/addTag', request_body).then(
+        addTag(request_body).then(
             ()=>{
                 props.history.push('/tag/list')
             },

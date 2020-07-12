@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout, Row, Col, Input, Form, Button } from 'antd'
 import { UserOutlined, LockOutlined, DownloadOutlined } from '@ant-design/icons';
+import { userLogin } from '../../utils/api'
 import './login.scss'
 
 const axios = require('axios')
@@ -8,9 +9,10 @@ const axios = require('axios')
 const LoginPage = (props) => {
 
     const onFinish = (data) => {
-        axios.post('/api/getUserByName', data).then(
+        userLogin(data).then(
             (response) => {
                 if(response.status === 200) {
+                    window.localStorage.setItem('token', response.data.res.token)
                     props.history.push('/')
                 }
             },

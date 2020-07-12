@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react'
-import { PageHeader, Divider } from 'antd'
-import axios from 'axios'
+import { getArticleById } from '../../../utils/api'
 import 'github-markdown-css/github-markdown.css'
 const divStyle = {
     'backgroundColor': 'white',
-    'padding':'15px'
+    'padding': '15px'
 }
 const ArticlePreview = (props) => {
     const params = new URLSearchParams(props.location.search)
@@ -12,7 +11,7 @@ const ArticlePreview = (props) => {
     const previewRef = useRef(null)
     useEffect(() => {
         if (id) {
-            axios.get(`/api/get/${id}`).then(
+            getArticleById(id).then(
                 (res) => {
                     console.log(res.data.res.previewContent)
                     previewRef.current.innerHTML = res.data.res.previewContent

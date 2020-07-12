@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Tag, Space, PageHeader,Popconfirm } from 'antd'
 import { withRouter } from 'react-router-dom'
+import { getArticles, deleteArticle } from '../../../utils/api'
 import dayjs from 'dayjs'
-import axios from 'axios'
 const ArticleList = (props) => {
     const columns = [
         {
@@ -55,7 +55,7 @@ const ArticleList = (props) => {
                 <Space size="middle">
                     <a onClick={() => previewArticle(record._id)}>预览</a>
                     <a onClick={() => editArticle(record._id)}>编辑</a>
-                    <Popconfirm title="确认删除?" onConfirm={() => deleteArticle(record._id)}>
+                    <Popconfirm title="确认删除?" onConfirm={() => deleteArticleByID(record._id)}>
                         <a>删除</a>
                     </Popconfirm>
                 </Space>
@@ -63,8 +63,8 @@ const ArticleList = (props) => {
         },
     ];
 
-    const deleteArticle = (id) => {
-        axios.get(`/api/delete/${id}`).then(
+    const deleteArticleByID = (id) => {
+        deleteArticle(id).then(
             () => {
                 setLoading(true)
             },
@@ -91,7 +91,7 @@ const ArticleList = (props) => {
 
         setLoading(true)
 
-        axios.get('/api/getArticles').then(
+        getArticles().then(
             (res) => {
                 if (!_ummount) {
                     setArticle(res.data.res)

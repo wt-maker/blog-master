@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, PageHeader, Col } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { fundColumns } from './config'
-import axios from 'axios'
+import {getFunds} from '../../../utils/api'
 const FundList = (props) => {
 
     const [fund, setFund] = useState([])
@@ -13,7 +13,7 @@ const FundList = (props) => {
     useEffect(() => {
 
         setLoading(true)
-        axios.get('/api/getAllFund').then(
+        getFunds().then(
             (res) => {
                 if (!_ummount) {
                     setFund(res.data.res.fundList)
