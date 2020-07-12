@@ -33,7 +33,7 @@ httpRequest.interceptors.response.use(
                 okText: '确定',
                 cancelText: '取消',
                 onOk() {
-                    window.location.href = '/login'
+                    window.location.href = '/'
                 },
                 onCancel() {
                     console.log('Cancel')

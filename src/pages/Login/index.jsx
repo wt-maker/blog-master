@@ -12,7 +12,7 @@ const LoginPage = (props) => {
         userLogin(data).then(
             (response) => {
                 if(response.status === 200) {
-                    window.localStorage.setItem('token', response.data.res.token)
+                    window.localStorage.setItem('token', JSON.stringify(response.data.res))
                     props.history.push('/')
                 }
             },
