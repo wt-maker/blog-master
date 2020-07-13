@@ -1,16 +1,18 @@
 #login-page {
     background-color: #f1f1f1;
     height: 100vh;
+    
 }
 
 #login-form {
     background-color: white;
     box-shadow: 0 0 8px rgba(0,0,0,.1);
-    width: 80%;
+    width: 20%;
     height: 400px;
     margin-top: 200px;
     padding: 60px;
     text-align: center;
+    margin: 0 auto;
     #login-username {
         display: block;
     };
@@ -26,7 +28,7 @@
     margin-left:30px;
     a {
         font-size: 40px;
-        color: #ea6f5a;
+        color: #36648B;
     };
 }
 
@@ -40,8 +42,8 @@
         color: #969696;
     };
     a {
-        color: #ea6f5a;
-        border-bottom: 2px solid #ea6f5a;
+        color: #36648B;
+        border-bottom: 2px solid #36648B;
         padding: 10px;
     }
 }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Input, Popconfirm, Form, PageHeader, Space } from 'antd'
+import { Table, Input, Popconfirm, Form, Space } from 'antd'
 import { CirclePicker } from 'react-color'
 import { getTags, updateTagById, deleteTagById } from '../../../utils/api'
 import dayjs from 'dayjs'
-
+import MyHeader from '../../Layout/header'
 const EditableCell = ({
     editing,
     dataIndex,
@@ -209,7 +209,7 @@ const TagList = () => {
 
     return (
         <Form form={form} component={false}>
-            <PageHeader className="site-page-header" title="标签列表" />
+            <MyHeader title="标签列表" />
             <Table
                 components={{
                     body: {

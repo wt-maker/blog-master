@@ -3,6 +3,7 @@ import { Layout, Menu} from 'antd';
 import { menuList } from './menu.config'
 import * as Icon from'@ant-design/icons/lib';
 import { Link } from 'react-router-dom'
+import './side.scss'
 const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
@@ -18,9 +19,9 @@ export default class Side extends React.Component {
 
     render() {
         return (
-            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+            <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} id="page-side">
                 <div className="logo" />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" id="page-menu">
                     {
                         menuList.map((menu) => {
                             const iconType = menu.icon
@@ -29,7 +30,7 @@ export default class Side extends React.Component {
                                     <Item key={menu.key} icon={React.createElement(
                                         Icon[iconType],
                                         {
-                                            style:{ fontSize: '16px', color: '#08c' }
+                                            style:{ fontSize: '16px', color: 'white' }
                                         }
                                     )}>
                                         <span>{menu.content}</span>
@@ -40,7 +41,7 @@ export default class Side extends React.Component {
                                     <SubMenu key={menu.key} title={menu.title} icon={React.createElement(
                                         Icon[iconType],
                                         {
-                                            style:{ fontSize: '16px', color: '#08c' }
+                                            style:{ fontSize: '16px', color: 'white' }
                                         }
                                     )}>
                                         {menu.child.map(menu => (

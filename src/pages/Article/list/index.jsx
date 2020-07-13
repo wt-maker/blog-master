@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Tag, Space, PageHeader,Popconfirm } from 'antd'
+import { Table, Tag, Space, Popconfirm } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { getArticles, deleteArticle } from '../../../utils/api'
 import dayjs from 'dayjs'
+import MyHeader from '../../Layout/header'
+
 const ArticleList = (props) => {
     const columns = [
         {
@@ -107,7 +109,7 @@ const ArticleList = (props) => {
     }, [loading])
     return (
         <section>
-            <PageHeader className="site-page-header" title="文章列表" />
+            <MyHeader title="文章列表" />
             <Table columns={columns} rowKey={record => record._id} dataSource={article} bordered='true' />
         </section>
     )

@@ -1,0 +1,14 @@
+$bgcolor:#36648B;
+
+#page-side {
+    background-color: $bgcolor;
+}
+#page-menu {
+    background-color: $bgcolor;
+    ul {
+        background-color: $bgcolor;
+    }
+}
+.ant-layout-sider-trigger{
+    background-color: $bgcolor;
+}

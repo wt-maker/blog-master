@@ -1,14 +1,13 @@
 import React, {useState} from 'react'
 import {withRouter} from 'react-router-dom'
-import { Form, Input, PageHeader, Button, Col, Row } from 'antd'
+import { Form, Input, Button, Col, Row } from 'antd'
 import { CirclePicker } from 'react-color'
 import { addTag } from '../../../utils/api'
+import MyHeader from '../../Layout/header'
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
 }
-
-
 const TagAdd = (props) => {
 
     const [color, setColor] = useState('#f44336')
@@ -33,7 +32,7 @@ const TagAdd = (props) => {
     }
     return (
         <Form onFinish={onFinish} layout='horizontal' {...layout} className="addTag">
-            <PageHeader className="site-page-header" title="添加标签" />
+            <MyHeader title="添加标签" />
             <Row align="top">
                 <Col span={8}>
                     <Form.Item

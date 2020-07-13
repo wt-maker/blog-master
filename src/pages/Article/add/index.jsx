@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Form, PageHeader } from 'antd'
+import { Form } from 'antd'
 import InputForm from './inputForm'
 import AreaForm from './areaFrom'
 import ButtonForm from './buttonForm'
 import { getArticleById, addArticle, updateArticle, getTags } from '../../../utils/api'
 import { useLocation } from 'react-router-dom'
+import MyHeader from '../../Layout/header'
 
 const layout = {
     labelCol: { span: 4 },
@@ -98,7 +99,7 @@ const ArticleAdd = (props) => {
     
     return (
         <Form {...layout} onFinish={onFinish} form={form}>
-            <PageHeader className="site-page-header" title={pageTitle} />
+            <MyHeader title={pageTitle} />
             <InputForm tags={tags}/>
             <AreaForm editContent={editContent} previewContent={previewContent} setEditContent={setEditContent} setPreviewContent={setPreviewContent} />
             <ButtonForm />

@@ -7,7 +7,7 @@ const { Content, Footer } = Layout;
 const Main = (props) => {
     return (
         <Layout className="site-layout">
-            <Content style={{ margin: '0 16px' }}>
+            <Content>
                 {
                     props.children ?
                         <Switch>

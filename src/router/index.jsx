@@ -73,6 +73,8 @@ export const RouteWithSubRoutes = (route) => {
                         <route.component {...props} {...route} />
                     )
                 } else {
+
+                    window.localStorage.removeItem('token')
                     return (
                         <LoginPage {...props}/>
                     )

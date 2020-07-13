@@ -1,8 +1,7 @@
-import { message, Modal } from 'antd'
+import { Modal } from 'antd'
 import loginStatus from './login'
 const axios = require('axios')
 
-const confirm = Modal.confirm;
 
 export const httpRequest = axios.create({
     baseURL: '/api'
@@ -10,8 +9,9 @@ export const httpRequest = axios.create({
 
 httpRequest.interceptors.request.use(
     config => {
-        let token = window.localStorage.getItem('token')
-        if (token) {
+        let tokenStorage = window.localStorage.getItem('token')
+        if (tokenStorage) {
+            let token = JSON.parse(tokenStorage).token
             config.headers.authorization = 'Bearer ' + token
         }
         return config
@@ -26,17 +26,17 @@ httpRequest.interceptors.response.use(
         return response
     },
     error => {
-        if (!loginStatus()) {
-            confirm({
+        if (!loginStatus() && error.response.status == 401) {
+            Modal.confirm({
                 title: '提示!',
                 content: '用户信息已过期，请点击确定后重新登录。',
                 okText: '确定',
                 cancelText: '取消',
                 onOk() {
+                    window.localStorage.removeItem('token')
                     window.location.href = '/'
                 },
                 onCancel() {
-                    console.log('Cancel')
                 }
             })
         }
