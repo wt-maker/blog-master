@@ -1,41 +1,34 @@
 import React from 'react'
-import { Layout, Row, Col, Input, Form, Button, message } from 'antd'
+import { Layout, Input, Form, Button, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { userLogin } from '../../utils/api'
 import './login.scss'
 
 const LoginPage = (props) => {
 
-    const onFinish = (data) => {
-        userLogin(data).then(
-            (response) => {
-                if (response.status === 200) {
-                    window.localStorage.setItem('token', JSON.stringify(response.data.res))
-                    props.history.push('/')
-                }
-            },
-            ({ response }) => {
-                console.log(response)
-                message.error('用户名或密码错误，请重新输入')
-            }
-        )
+    const onFinish = async (data) => {
+        
+        let response = await userLogin(data)
+        if (response.status === 200) {
+            window.localStorage.setItem('token', JSON.stringify(response.res))
+            props.history.replace('/')
+        } else {
+            message.error('用户名或密码错误，请重新输入')
+        }
     }
     return (
         <Form onFinish={onFinish} layout='horizontal' className="addTag">
             <Layout id="login-page">
 
                 <div id="login-logo">
-                    <a href="/">
+                    <span>
                         博客后台管理
-                        </a>
+                    </span>
                 </div>
-
                 <div id="login-form">
                     <h4 className="title">
                         <div id="login-title">
-                            <a>登录</a>
-                            {/*  <b>·</b>
-                                <a>注册</a> */}
+                            <span>登录</span>
                         </div>
                     </h4>
                     <Form.Item
@@ -52,7 +45,7 @@ const LoginPage = (props) => {
                     </Form.Item>
                     <Button type="primary" shape="round" id="login-button" htmlType='submit'>
                         登录
-                        </Button>
+                    </Button>
                 </div>
 
             </Layout>

@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import { Form, Input, Button, Col, Row } from 'antd'
 import { CirclePicker } from 'react-color'
-import { addTag } from '../../../utils/api'
-import MyHeader from '../../Layout/header'
+import { addTag } from '../../utils/api'
+import MyHeader from '../../components/Header'
 const layout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 20 },
@@ -16,15 +16,11 @@ const TagAdd = (props) => {
         let request_body = {
             name:tag,
             color:color
-        }
-        addTag(request_body).then(
-            ()=>{
-                props.history.push('/tag/list')
-            },
-            ({response}) => {
-                console.log(response)
-            }
-        )
+        };
+        (async () => {
+            await addTag(request_body)
+            props.history.push('/tag/list')
+        })()
     }
 
     const handleChangeColor = (color) => {

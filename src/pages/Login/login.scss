@@ -20,16 +20,22 @@
         margin-top: 20px;
         background-color: #3194d0;
         width: 80%;
+    };
+    #login-title{
+        color: #36648b;
+        border-bottom: 2px solid #36648b;
+        padding: 10px;
     }
+
 }
 
 #login-logo {
     margin-top:60px;
     margin-left:30px;
-    a {
+    span {
         font-size: 40px;
         color: #36648B;
-    };
+    }
 }
 
 .title{
@@ -41,9 +47,4 @@
         padding: 10px;
         color: #969696;
     };
-    a {
-        color: #36648B;
-        border-bottom: 2px solid #36648B;
-        padding: 10px;
-    }
 }

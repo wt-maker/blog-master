@@ -1,40 +1,40 @@
 const { httpRequest } = require('./httpRequest')
-
+const POST = 'POST'
 // 获得所有标签
-export const getTags = () => httpRequest.get('getTags')
+export const getTags = () => httpRequest('getTags')
 // 删除标签
-export const deleteTagById = (id) => httpRequest.get(`deleteTag/${id}`)
+export const deleteTagById = (id) => httpRequest(`deleteTag/${id}`)
 // 更新标签
-export const updateTagById = (id, data) => httpRequest.post(`updateTag/${id}`, data)
+export const updateTagById = (id, data) => httpRequest(`updateTag/${id}`, data, POST)
 // 插入标签
-export const addTag = (data) => httpRequest.post('addTag', data)
+export const addTag = (data) => httpRequest('addTag', data, POST)
 //查询标签
-export const getTagById = (id) => httpRequest.get(`getTag/${id}`)
+export const getTagById = (id) => httpRequest(`getTag/${id}`)
 
 // 获得所有文章
-export const getArticles = () => httpRequest.get('getArticles')
+export const getArticles = () => httpRequest('getArticles')
 // 修改文章
-export const updateArticle = (id, data) => httpRequest.post(`updateArticle/${id}`, data)
+export const updateArticle = (id, data) => httpRequest(`updateArticle/${id}`, data, POST)
 // 删除文章
-export const deleteArticle = (id) => httpRequest.get(`deleteArticle/${id}`)
+export const deleteArticle = (id) => httpRequest(`deleteArticle/${id}`)
 //添加文章
-export const addArticle = (data) => httpRequest.post('addArticle', data)
+export const addArticle = (data) => httpRequest('addArticle', data, POST)
 //查询文章
-export const getArticleById = (id) => httpRequest.get(`getArticle/${id}`)
+export const getArticleById = (id) => httpRequest(`getArticle/${id}`)
 
 // 获得所有基金
-export const getFunds = () => httpRequest.get('getFunds')
+export const getFunds = () => httpRequest('getFunds')
 // 修改基金
-export const updateFund = (id, data) => httpRequest.post(`updateFund/${id}`, data)
+export const updateFund = (id, data) => httpRequest(`updateFund/${id}`, data, POST)
 // 删除基金
-export const deleteFund = (id) => httpRequest.get(`deleteFund${id}`)
+export const deleteFund = (id) => httpRequest(`deleteFund${id}`)
 //添加基金
-export const addFund = (data) => httpRequest.post('addFund', data)
+export const addFund = (data) => httpRequest('addFund', data, POST)
 //查询基金
-export const getFund = (id) => httpRequest.get(`getFund/${id}`)
+export const getFund = (id) => httpRequest(`getFund/${id}`)
 
 // 用户登录
-export const userLogin = (data) => httpRequest.post('login', data)
+export const userLogin = (data) => httpRequest('login', data, POST)
 
 
 

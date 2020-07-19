@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Input, Popconfirm, Form, Space } from 'antd'
 import { CirclePicker } from 'react-color'
-import { getTags, updateTagById, deleteTagById } from '../../../utils/api'
+import { getTags, updateTagById, deleteTagById } from '../../utils/api'
 import dayjs from 'dayjs'
-import MyHeader from '../../Layout/header'
+import MyHeader from '../../components/Header'
+import MyLink from '../../components/Link'
 const EditableCell = ({
     editing,
     dataIndex,
@@ -52,19 +53,16 @@ const TagList = () => {
     const [color, setColor] = useState('')
     const [updateFlg, setUpdateFlg] = useState(false)
     const isEditing = record => record._id === editingKey;
-    var _ummount = false
     useEffect(() => {
-        getTags().then(
-            (response) => {
-                if (!_ummount) {
-                    let tags = response.data.res
-                    setData(tags)
-                }
-            },
-            ({ response }) => {
+        let unmount = false;
+        (async () => {
+            let {res} = await getTags()
+            if (!unmount) {
+                setData(res)
             }
-        )
-        return () => _ummount = true
+        })()
+
+        return () => unmount = true
     }, [editingKey, color, updateFlg])
 
     const edit = record => {
@@ -80,36 +78,23 @@ const TagList = () => {
     }
 
     const save = async record => {
-        let row = await form.validateFields();
+        let row = await form.validateFields()
         let request_body = {
             name: row.name,
             color: color,
             update_dt: Date.now()
-        }
-
-        try {
-            updateTagById(record._id, request_body).then(
-                () => {
-                    if (!_ummount) {
-                        setEditingKey('')
-                    }
-                }
-            )
-        } catch (error) {
-        }
+        };
+        (async () => {
+            await updateTagById(record._id, request_body)
+            setEditingKey('')
+        })()
     }
 
     const deleteTag = async id => {
-        try {
-            deleteTagById(id).then(
-                () => {
-                    if (!_ummount) {
-                        setUpdateFlg(!updateFlg)
-                    }
-                }
-            )
-        } catch (error) {
-        }
+        (async () => {
+            await deleteTagById(id)
+            setUpdateFlg(!updateFlg)
+        })()
     }
 
     const columns = [
@@ -158,27 +143,27 @@ const TagList = () => {
                 return editable ? (
                     <span>
                         <Space size="middle">
-                            <a
+                            <MyLink
                                 onClick={() => save(record)}
                                 style={{
                                     marginRight: 8,
                                 }}
                             >
                                 保存
-                            </a>
-                            <a onClick={cancel}>
+                            </MyLink>
+                            <MyLink onClick={cancel}>
                                 取消
-                            </a>
+                            </MyLink>
                         </Space>
                     </span>
                 ) : (
                         <span>
                             <Space size="middle">
-                                <a disabled={editingKey !== ''} onClick={() => edit(record)}>
+                                <MyLink disabled={editingKey !== ''} onClick={() => edit(record)}>
                                     修改
-                                </a>
+                                </MyLink>
                                 <Popconfirm title="确认删除?" onConfirm={() => deleteTag(record._id)}>
-                                    <a>删除</a>
+                                    <MyLink>删除</MyLink>
                                 </Popconfirm>
                             </Space>
                         </span>

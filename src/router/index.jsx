@@ -1,14 +1,13 @@
 import PageLayout from '../pages/Layout'
-import ArticleAdd from '../pages/Article/add'
-import ArticleDrafts from '../pages/Article/drafts'
-import ArticleList from '../pages/Article/list'
-import ArticlePreview from '../pages/Article/preview'
-import TagList from '../pages/Tag/list'
-import TagAdd from '../pages/Tag/add'
-import SourceAdd from '../pages/Source/add'
-import SourceList from '../pages/Source/list'
-import FundList from '../pages/Fund/list'
+import ArticleAdd from '../pages/ArticleAdd'
+import ArticleDrafts from '../pages/ArticleDrafts'
+import ArticleList from '../pages/ArtilceList'
+import ArticlePreview from '../pages/ArticlePreview'
+import TagList from '../pages/TagList'
+import TagAdd from '../pages/TagAdd'
+import FundList from '../pages/FundList'
 import LoginPage from '../pages/Login'
+import Home from '../pages/Home'
 import { Route } from 'react-router-dom'
 import loginStatus from '../utils/login'
 import React from 'react'
@@ -47,16 +46,12 @@ export const routes = [
                 component: TagAdd
             },
             {
-                path: '/source/list',
-                component: SourceList
-            },
-            {
-                path: '/source/add',
-                component: SourceAdd
-            },
-            {
                 path: '/fund/list',
                 component: FundList
+            },
+            {
+                path: '/',
+                component: Home
             }
         ]
     }

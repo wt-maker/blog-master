@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { getArticleById } from '../../../utils/api'
+import { getArticleById } from '../../utils/api'
+import MyHeader from '../../components/Header'
 import 'github-markdown-css/github-markdown.css'
 const divStyle = {
     'backgroundColor': 'white',
@@ -11,17 +12,18 @@ const ArticlePreview = (props) => {
     const previewRef = useRef(null)
     useEffect(() => {
         if (id) {
-            getArticleById(id).then(
-                (res) => {
-                    console.log(res.data.res.previewContent)
-                    previewRef.current.innerHTML = res.data.res.previewContent
-                }
-            )
+            (async () => {
+                let response = await getArticleById(id)
+                previewRef.current.innerHTML = response.res.previewContent
+            })()
         }
     })
     return (
-        <div className='markdown-body' style={divStyle}>
-            <div ref={previewRef}></div>
+        <div>
+            <MyHeader title="源码列表" />
+            <div className='markdown-body' style={divStyle}>
+                <div ref={previewRef}></div>
+            </div>
         </div>
     )
 }

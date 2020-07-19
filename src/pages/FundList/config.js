@@ -3,26 +3,26 @@ export const fundColumns = [
     {
         title: 'No.',
         key: 'no',
-        width: 20,
+        width: 100,
         render: (text, record, dataIndex) => <span>{dataIndex + 1}</span>
     },
     {
         title: 'serialNumber',
         dataIndex: 'serialNumber',
         key: 'serialNumber',
-        width: 100
+        width: 200
     },
     {
         title: 'fundName',
         dataIndex: 'name',
         key: 'name',
-        width: 100
+        width: 300
     },
     {
         title: 'position',
         dataIndex: 'position',
         key: 'position',
-        width: 100
+        width: 200
     },
     {
         title: 'applies',
