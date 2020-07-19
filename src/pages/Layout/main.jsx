@@ -2,6 +2,7 @@ import React from 'react'
 import { Layout } from 'antd';
 import { Switch } from 'react-router-dom'
 import { RouteWithSubRoutes } from '../../router'
+import './main.scss'
 
 const { Content, Footer } = Layout;
 const Main = (props) => {

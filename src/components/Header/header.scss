@@ -1,7 +1,23 @@
 #page-header {
     background-color: #4682B4;
     color: whitesmoke;
-    margin-bottom: 20px;
+    padding: 0;
+    position: relative;
+    height: 65px;
+    margin-bottom: 30px;
+    .header-left{
+        width: 25%;
+        height: 100%;
+        float: left;
+        text-align: center;
+        font-size: large;
+    }
+    .header-right{
+        width: 75%;
+        height: 100%;
+        float: left;
+        padding-right: 80px;
+    }
 }
 
 #logout-button {

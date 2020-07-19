@@ -1,6 +1,6 @@
 import React from 'react'
-import {Layout, Button} from 'antd'
-import {withRouter} from 'react-router-dom'
+import { Layout, Button } from 'antd'
+import { withRouter } from 'react-router-dom'
 import './header.scss'
 const MyHeader = (props) => {
 
@@ -11,8 +11,12 @@ const MyHeader = (props) => {
 
     return (
         <Layout.Header id="page-header">
-            {props.title}
-            <Button id="logout-button" size='large' onClick={logout}>logout</Button>
+            <div className="header-left">
+                <span>{props.title}</span>
+            </div>
+            <div className="header-right">
+                <Button id="logout-button" size='large' onClick={logout}>logout</Button>
+            </div>
         </Layout.Header>
     )
 }

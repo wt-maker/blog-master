@@ -19,7 +19,7 @@ const LeftNav = (props) => {
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" id="page-menu">
                 {
                     menuList.map((menu) => {
-                        const iconType = menu.icon
+                        let iconType = menu.icon
                         if (!menu.child) {
                             return (
                                 <Item key={menu.key} icon={React.createElement(
@@ -28,7 +28,7 @@ const LeftNav = (props) => {
                                         style: { fontSize: '16px', color: 'white' }
                                     }
                                 )}>
-                                    <span><Link to={menu.path}>{menu.content}</Link></span>
+                                    <Link to={menu.path}>{menu.content}</Link>
                                 </Item>
                             )
                         } else {
@@ -39,11 +39,18 @@ const LeftNav = (props) => {
                                         style: { fontSize: '16px', color: 'white' }
                                     }
                                 )}>
-                                    {menu.child.map(menu => (
-                                        <Item key={menu.key} title={menu.title}>
-                                            <Link to={menu.path}>{menu.content}</Link>
-                                        </Item>
-                                    ))}
+                                    {menu.child.map(menu => {
+                                        return (
+                                            <Item key={menu.key} title={menu.title} icon={React.createElement(
+                                                Icon[menu.icon],
+                                                {
+                                                    style: { fontSize: '16px', color: 'white' }
+                                                }
+                                            )}>
+                                                <Link to={menu.path}>{menu.content}</Link>
+                                            </Item>
+                                        )
+                                    })}
                                 </SubMenu>
                             )
                         }

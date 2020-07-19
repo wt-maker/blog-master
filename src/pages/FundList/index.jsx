@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Table } from 'antd'
+import { Table, Card } from 'antd'
 import { withRouter } from 'react-router-dom'
 import { fundColumns } from './config'
 import { getFunds } from '../../utils/api'
 import MyHeader from '../../components/Header'
+import ButtonLink from '../../components/Link'
+import './fundList.scss'
+
 const FundList = (props) => {
 
     const [fund, setFund] = useState([])
@@ -34,22 +37,27 @@ const FundList = (props) => {
     return (
         <section>
             <MyHeader title="FUND列表" />
-            
-                <Table
-                    columns={fundColumns}
-                    rowKey={record => record.serialNumber}
-                    dataSource={fund}
-                    bordered='true'
-                    size='small'
-                    summary={() => (
-                        <Table.Summary.Row>
-                            <Table.Summary.Cell colSpan={3} index={0}>合计</Table.Summary.Cell>
-                            <Table.Summary.Cell index={1}>{cost}</Table.Summary.Cell>
-                            <Table.Summary.Cell index={2}>{income}</Table.Summary.Cell>
-                        </Table.Summary.Row>
-                    )}
-                />
-            
+            <Card id="fund-card" title="净值估算" extra={<ButtonLink>More</ButtonLink>}>
+                <section id="table-section">
+                    <Table
+                        columns={fundColumns}
+                        rowKey={record => record.serialNumber}
+                        dataSource={fund}
+                        bordered='true'
+                        size='small'
+                        summary={() => (
+                            <Table.Summary.Row>
+                                <Table.Summary.Cell colSpan={3} index={0}>合计</Table.Summary.Cell>
+                                <Table.Summary.Cell index={1}>{cost}</Table.Summary.Cell>
+                                <Table.Summary.Cell index={2}>{income}</Table.Summary.Cell>
+                            </Table.Summary.Row>
+                        )}
+                    />
+                </section>
+
+            </Card>
+
+
         </section>
     )
 }

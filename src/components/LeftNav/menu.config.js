@@ -15,48 +15,54 @@ export const menuList = [
             {
                 content:'文章列表',
                 key:'article-list',
-                path:'/article/list'
+                path:'/article/list',
+                icon:'UnorderedListOutlined'
             },
             {
                 content:'添加文章',
                 key:'article-add',
-                path:'/article/add'
+                path:'/article/add',
+                icon:'PlusSquareOutlined'
             },
             {
                 content:'草稿箱',
                 key:'article-drafts',
-                path:'/article/drafts'
+                path:'/article/drafts',
+                icon:'EditOutlined'
             }
         ]
     },
     {
         title:'标签管理',
         key:'tag-manage',
-        icon:'HddOutlined',
+        icon:'TagsOutlined',
         content:'标签管理',
         child:[
             {
                 content:'标签列表',
                 key:'tag-list',
-                path:'/tag/list'
+                path:'/tag/list',
+                icon:'TagOutlined'
             },
             {
                 content:'添加标签',
                 key:'tag-add',
-                path:'/tag/add'
+                path:'/tag/add',
+                icon:'PercentageOutlined'
             }
         ]
     },
     {
         title:'乱七八糟',
         key:'source-manage',
-        icon:'GithubOutlined',
+        icon:'RobotOutlined',
         content:'乱七八糟',
         child:[
             {
                 content:'fund管理',
                 key:'fund-list',
-                path:'/fund/list'
+                path:'/fund/list',
+                icon:'FundOutlined'
             }
         ]
     }
