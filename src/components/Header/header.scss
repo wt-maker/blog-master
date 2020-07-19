@@ -4,13 +4,23 @@
     padding: 0;
     position: relative;
     height: 65px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     .header-left{
         width: 25%;
         height: 100%;
         float: left;
         text-align: center;
         font-size: large;
+        .header-logo {
+            width:0;
+            height:0;
+            border-right:20px solid transparent;
+            border-left:20px solid transparent;
+            border-top:20px solid #4682B4;
+            position: relative;
+            left:50%;
+            transform: translateX(-50%);
+        }
     }
     .header-right{
         width: 75%;

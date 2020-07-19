@@ -13,10 +13,13 @@ const MyHeader = (props) => {
         <Layout.Header id="page-header">
             <div className="header-left">
                 <span>{props.title}</span>
+                <div className="header-logo">
+                </div>
             </div>
             <div className="header-right">
                 <Button id="logout-button" size='large' onClick={logout}>logout</Button>
             </div>
+
         </Layout.Header>
     )
 }
