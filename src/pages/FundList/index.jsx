@@ -40,7 +40,7 @@ const FundList = (props) => {
                 }, 0))
 
                 setIncome(response.res.fundList.reduce((pre, cur) => {
-                    return pre + cur.position * parseFloat(cur.applies) * 0.01
+                    return parseInt(pre + cur.position * parseFloat(cur.applies) * 0.01)
                 }, 0))
             }
         })()
@@ -50,6 +50,8 @@ const FundList = (props) => {
     }, [loading])
 
     const showModal = () => {
+        serFundCode('')
+        setFundPosition('')
         setVisible(true)
     }
 
