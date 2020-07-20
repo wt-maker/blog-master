@@ -37,20 +37,7 @@ export const menuList = [
         key:'tag-manage',
         icon:'TagsOutlined',
         content:'标签管理',
-        child:[
-            {
-                content:'标签列表',
-                key:'tag-list',
-                path:'/tag/list',
-                icon:'TagOutlined'
-            },
-            {
-                content:'添加标签',
-                key:'tag-add',
-                path:'/tag/add',
-                icon:'PercentageOutlined'
-            }
-        ]
+        path:'/tag/manage'
     },
     {
         title:'乱七八糟',

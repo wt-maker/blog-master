@@ -1,39 +1,10 @@
-import React, { useRef, useEffect, useState} from 'react'
-import { Row, Col } from 'antd'
 import 'highlight.js/styles/vs2015.css'
 import 'github-markdown-css/github-markdown.css'
-const MarkdownIt = require('markdown-it')
-const hljs = require('highlight.js')
+import './articleAdd.scss'
+import React, { useRef, useEffect, useState} from 'react'
+import { Row, Col } from 'antd'
+import { md } from './articleAdd.config'
 
-const divStyle = {
-    'border': '1px solid #a0b3d6',
-    'backgroundColor': 'white',
-    'fontSize': '12px',
-    'wordWrap': 'break-word',
-    'overflowX': 'hidden',
-    'overflowY': 'auto'
-}
-
-const childStyle = {
-    'marginLeft': 'auto',
-    'height': '500px',
-    'marginRight': 'auto',
-    'padding': '20px',
-    'outline': '0',
-}
-const md = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true,
-    highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return hljs.highlight(lang, str, true).value;
-            } catch (__) { }
-        }
-        return ''
-    }
-})
 const AreaForm = (props) => {
 
     // 编辑画面预览画面同步
@@ -88,26 +59,22 @@ const AreaForm = (props) => {
         <React.Fragment>
             <Row gutter={[8, 8]}>
                 <Col span={12}>
-                    <div className='content-edit' style={divStyle}>
+                    <div className='content-edit'>
                         <div
                             contentEditable='plaintext-only'
                             onInput={onContentChange}
                             className='content-child'
-                            style={childStyle}
                             ref={editRef}
                         >
-                        
                         </div>
                     </div>
                 </Col>
                 <Col span={12}>
-                    <div className='markdown-body' style={divStyle}>
+                    <div className='markdown-body'>
                         <div
                             className='content-child'
-                            style={childStyle}
                             ref={previewRef}
                         >
-
                         </div>
                     </div>
                 </Col>

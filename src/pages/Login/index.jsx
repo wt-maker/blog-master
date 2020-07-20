@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Input, Form, Button, message } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons/lib';
 import { userLogin } from '../../utils/api'
 import './login.scss'
 

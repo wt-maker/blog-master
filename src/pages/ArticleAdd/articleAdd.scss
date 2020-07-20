@@ -1,0 +1,14 @@
+.content-edit, .markdown-body {
+    border: 1px solid #a0b3d6;
+    background-color: white;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 500px;
+    .content-child {
+        margin: auto;
+        padding: 20px;
+        outline: 0;
+    }
+}

@@ -4,7 +4,6 @@ import ArticleDrafts from '../pages/ArticleDrafts'
 import ArticleList from '../pages/ArtilceList'
 import ArticlePreview from '../pages/ArticlePreview'
 import TagList from '../pages/TagList'
-import TagAdd from '../pages/TagAdd'
 import FundList from '../pages/FundList'
 import LoginPage from '../pages/Login'
 import Home from '../pages/Home'
@@ -38,12 +37,8 @@ export const routes = [
                 component: ArticlePreview
             },
             {
-                path: '/tag/list',
+                path: '/tag/manage',
                 component: TagList
-            },
-            {
-                path: '/tag/add',
-                component: TagAdd
             },
             {
                 path: '/fund/list',

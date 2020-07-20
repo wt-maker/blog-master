@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Card } from 'antd'
 import { withRouter } from 'react-router-dom'
-import { fundColumns } from './config'
+import { fundColumns } from './fundList.config'
 import { getFunds } from '../../utils/api'
-import MyHeader from '../../components/Header'
 import ButtonLink from '../../components/Link'
 import './fundList.scss'
 
@@ -34,9 +33,9 @@ const FundList = (props) => {
 
         return () => unmount = true
     }, [loading])
+
     return (
         <section>
-            <MyHeader title="FUND列表" />
             <Card id="fund-card" title="净值估算" extra={<ButtonLink>More</ButtonLink>}>
                 <section id="table-section">
                     <Table
@@ -54,10 +53,7 @@ const FundList = (props) => {
                         )}
                     />
                 </section>
-
             </Card>
-
-
         </section>
     )
 }

@@ -5,17 +5,11 @@ import InputForm from './inputForm'
 import AreaForm from './areaFrom'
 import ButtonForm from './buttonForm'
 import { getArticleById, addArticle, updateArticle, getTags } from '../../utils/api'
-import MyHeader from '../../components/Header'
-
-const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 16 }
-}
+import { layout } from './articleAdd.config'
 
 const ArticleAdd = (props) => {
 
     const [form] = Form.useForm()
-    const [pageTitle, setPageTitle] = useState('')
     const [editContent, setEditContent] = useState('')
     const [previewContent, setPreviewContent] = useState('')
     const [tags, setTags] = useState([])
@@ -32,9 +26,8 @@ const ArticleAdd = (props) => {
 
         let id = params.get('id')
         if (id) {
-            setPageTitle('编辑文章');
-            (async() => {
-                let {res} = await getArticleById(id)
+            (async () => {
+                let { res } = await getArticleById(id)
                 if (!unmount) {
                     setEditContent(res.editContent)
                     setPreviewContent(res.previewContent)
@@ -47,12 +40,9 @@ const ArticleAdd = (props) => {
                     })
                 }
             })()
-            
-        } else {
-            setPageTitle('添加文章')
         }
         return () => unmount = true
-    }, [pageTitle])
+    }, [])
 
     const saveArticle = async (article) => {
         await addArticle(article)
@@ -82,7 +72,6 @@ const ArticleAdd = (props) => {
 
     return (
         <Form {...layout} onFinish={onFinish} form={form}>
-            <MyHeader title={pageTitle} />
             <InputForm tags={tags} />
             <AreaForm editContent={editContent} previewContent={previewContent} setEditContent={setEditContent} setPreviewContent={setPreviewContent} />
             <ButtonForm />

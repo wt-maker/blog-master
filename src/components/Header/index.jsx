@@ -1,8 +1,24 @@
 import React from 'react'
 import { Layout, Button } from 'antd'
 import { withRouter } from 'react-router-dom'
+import { menuList } from '../LeftNav/menu.config'
 import './header.scss'
 const MyHeader = (props) => {
+
+    const getTitle = (list) => {
+        for (let menu of list) {
+            if (!menu.child) {
+                if (menu.path === props.location.pathname) {
+                    return menu.content
+                }
+            } else {
+                let result = getTitle(menu.child)
+                if (result) {
+                    return result
+                }
+            }
+        }
+    }
 
     const logout = () => {
         window.localStorage.removeItem('token')
@@ -12,7 +28,7 @@ const MyHeader = (props) => {
     return (
         <Layout.Header id="page-header">
             <div className="header-left">
-                <span>{props.title}</span>
+                <span>{getTitle(menuList)}</span>
                 <div className="header-logo">
                 </div>
             </div>

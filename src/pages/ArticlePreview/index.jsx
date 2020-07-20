@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { getArticleById } from '../../utils/api'
-import MyHeader from '../../components/Header'
 import 'github-markdown-css/github-markdown.css'
-const divStyle = {
-    'backgroundColor': 'white',
-    'padding': '15px'
-}
+import './articlePreview.scss'
 const ArticlePreview = (props) => {
     const params = new URLSearchParams(props.location.search)
     const id = params.get('id')
@@ -20,8 +16,7 @@ const ArticlePreview = (props) => {
     })
     return (
         <div>
-            <MyHeader title="源码列表" />
-            <div className='markdown-body' style={divStyle}>
+            <div className='markdown-body'>
                 <div ref={previewRef}></div>
             </div>
         </div>
