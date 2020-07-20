@@ -27,7 +27,7 @@ export const getFunds = () => httpRequest('getFunds')
 // 修改基金
 export const updateFund = (id, data) => httpRequest(`updateFund/${id}`, data, POST)
 // 删除基金
-export const deleteFund = (id) => httpRequest(`deleteFund${id}`)
+export const deleteFund = (id) => httpRequest(`deleteFund/${id}`)
 //添加基金
 export const addFund = (data) => httpRequest('addFund', data, POST)
 //查询基金

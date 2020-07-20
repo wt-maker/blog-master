@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Form, Card, Button, Modal } from 'antd'
-import { getTags, updateTagById, deleteTagById } from '../../utils/api'
+import { addTag, getTags, updateTagById, deleteTagById } from '../../utils/api'
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { computeColumns } from './tagListConfig'
 import EditableCell from './editableCell'
@@ -13,6 +13,7 @@ const TagList = () => {
     const [data, setData] = useState([])
     const [editingKey, setEditingKey] = useState('')
     const [color, setColor] = useState('')
+    const [tag, setTag] = useState('')
     const [updateFlg, setUpdateFlg] = useState(false)
     const [visible, setVisible] = useState(false)
     const isEditing = record => record._id === editingKey
@@ -61,14 +62,24 @@ const TagList = () => {
         })()
     }
     const showModal = () => {
+        setTag('')
+        setColor('rgb(244, 67, 54)')
         setVisible(true)
     }
 
-    const handleOk = e => {
-        setVisible(false)
+    const handleOk = () => {
+        let request_body = {
+            name: tag,
+            color: color
+        };
+        (async () => {
+            await addTag(request_body)
+            setVisible(false)
+            setUpdateFlg(!updateFlg)
+        })()
     }
 
-    const handleCancel = e => {
+    const handleCancel = () => {
         setVisible(false)
     }
 
@@ -79,8 +90,9 @@ const TagList = () => {
 
             <Form form={form} component={false}>
                 <Card id="tag-card" title="标签列表"
-                    extra={<Button type="primary"
-                        onClick={showModal}><PlusCircleOutlined />添加标签</Button>}
+                    extra={<Button type="primary"onClick={showModal}>
+                                <PlusCircleOutlined />添加标签
+                            </Button>}
                 >
                     <section id="table-section">
                         <Table
@@ -110,7 +122,7 @@ const TagList = () => {
                     onOk={handleOk}
                     onCancel={handleCancel}
                 >
-                    <TagAdd />
+                    <TagAdd setColor={setColor} setTag={setTag} color={color}/>
                 </Modal>
             </div>
         </section>
