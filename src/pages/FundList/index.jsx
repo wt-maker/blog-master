@@ -6,7 +6,6 @@ import { getFunds } from '../../utils/api'
 import { PlusCircleOutlined } from '@ant-design/icons';
 import FundAdd from './fundAdd'
 import { addFund, deleteFund } from '../../utils/api'
-import MyLink from '../../components/Link'
 import './fundList.scss'
 
 const FundList = (props) => {
@@ -16,11 +15,10 @@ const FundList = (props) => {
     const [income, setIncome] = useState(0)
     const [loading, setLoading] = useState(false)
     const [visible, setVisible] = useState(false)
-    const [fundCode, serFundCode] = useState('')
-    const [fundPosition, setFundPosition] = useState('')
 
-    const remove = async(id) => {
-        // 删除基金
+    const formRef = React.createRef()
+
+    const remove = async (id) => {
         await deleteFund(id)
         setLoading(true)
     }
@@ -28,6 +26,7 @@ const FundList = (props) => {
     const fundColumns = initColumns(remove)
 
     useEffect(() => {
+        console.log("render")
         let unmount = false
         setLoading(true);
         (async () => {
@@ -35,11 +34,11 @@ const FundList = (props) => {
             if (!unmount) {
                 setFund(response.res.fundList)
 
-                setCost(response.res.fundList.reduce((pre, cur) => {
+                setCost(fund.reduce((pre, cur) => {
                     return pre + cur.position
                 }, 0))
 
-                setIncome(response.res.fundList.reduce((pre, cur) => {
+                setIncome(fund.reduce((pre, cur) => {
                     return parseInt(pre + cur.position * parseFloat(cur.applies) * 0.01)
                 }, 0))
             }
@@ -50,22 +49,24 @@ const FundList = (props) => {
     }, [loading])
 
     const showModal = () => {
-        serFundCode('')
-        setFundPosition('')
         setVisible(true)
     }
 
     const handleOk = () => {
-        let data = {
-            serialNumber: fundCode,
-            position: fundPosition
-        };
 
-        (async () => {
-            await addFund(data)
-            setVisible(false)
-            setLoading(true)
-        })()
+        formRef.current.validateFields()
+            .then(values => {
+                console.log(values)
+                let data = {
+                    serialNumber: values.serialNumber,
+                    position: values.position
+                };
+                (async () => {
+                    await addFund(data)
+                    setVisible(false)
+                    setLoading(true)
+                })()
+            }).catch(errorInfo => { })
     }
 
     const handleCancel = () => {
@@ -78,8 +79,9 @@ const FundList = (props) => {
                 <PlusCircleOutlined />添加基金</Button>}>
                 <section id="table-section">
                     <Table
+                        loading={loading}
                         columns={fundColumns}
-                        rowKey={record => record.serialNumber}
+                        rowKey={record => record.id}
                         dataSource={fund}
                         bordered='true'
                         size='small'
@@ -89,7 +91,7 @@ const FundList = (props) => {
                                 <Table.Summary.Cell index={1}>{cost}</Table.Summary.Cell>
                                 <Table.Summary.Cell index={2}>{income}</Table.Summary.Cell>
                                 <Table.Summary.Cell index={3}>
-                                    <MyLink onClick={setLoading(true)}>刷新</MyLink>
+                                    <Button type="primary" onClick={() => setLoading(true)}>刷新</Button>
                                 </Table.Summary.Cell>
                             </Table.Summary.Row>
                         )}
@@ -105,7 +107,7 @@ const FundList = (props) => {
                     onOk={handleOk}
                     onCancel={handleCancel}
                 >
-                    <FundAdd serFundCode={serFundCode} setFundPosition={setFundPosition} />
+                    <FundAdd formRef={formRef} visible={visible} />
                 </Modal>
             </div>
         </section>

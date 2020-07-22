@@ -13,10 +13,11 @@ const TagList = () => {
     const [data, setData] = useState([])
     const [editingKey, setEditingKey] = useState('')
     const [color, setColor] = useState('')
-    const [tag, setTag] = useState('')
     const [updateFlg, setUpdateFlg] = useState(false)
     const [visible, setVisible] = useState(false)
     const isEditing = record => record._id === editingKey
+
+    const formRef = React.createRef();
 
     useEffect(() => {
         let unmount = false;
@@ -28,7 +29,7 @@ const TagList = () => {
         })()
 
         return () => unmount = true
-    }, [editingKey, color, updateFlg])
+    }, [editingKey, updateFlg])
 
     const edit = record => {
         form.setFieldsValue({
@@ -61,26 +62,20 @@ const TagList = () => {
             setUpdateFlg(!updateFlg)
         })()
     }
-    const showModal = () => {
-        setTag('')
-        setColor('rgb(244, 67, 54)')
-        setVisible(true)
-    }
 
-    const handleOk = () => {
-        let request_body = {
-            name: tag,
-            color: color
-        };
-        (async () => {
-            await addTag(request_body)
-            setVisible(false)
-            setUpdateFlg(!updateFlg)
-        })()
-    }
+    const handleOk = async () => {
 
-    const handleCancel = () => {
-        setVisible(false)
+        formRef.current.validateFields()
+            .then(values => {
+                let name = values.tag
+                let color = values.color.hex;
+
+                (async () => {
+                    await addTag({ name, color })
+                    setVisible(false)
+                    setUpdateFlg(!updateFlg)
+                })()
+            }).catch(errorInfo => { })
     }
 
     const mergedColumns = computeColumns(color, setColor, isEditing, save, cancel, editingKey, edit, deleteTag)
@@ -90,8 +85,8 @@ const TagList = () => {
 
             <Form form={form} component={false}>
                 <Card id="tag-card" title="标签列表"
-                    extra={<Button type="primary"onClick={showModal}>
-                                <PlusCircleOutlined />添加标签
+                    extra={<Button type="primary" onClick={()=>setVisible(true)}>
+                        <PlusCircleOutlined />添加标签
                             </Button>}
                 >
                     <section id="table-section">
@@ -120,9 +115,9 @@ const TagList = () => {
                     okText="保存"
                     cancelText="取消"
                     onOk={handleOk}
-                    onCancel={handleCancel}
+                    onCancel={()=>setVisible(false)}
                 >
-                    <TagAdd setColor={setColor} setTag={setTag} color={color}/>
+                    <TagAdd formRef={formRef} visible={visible}/>
                 </Modal>
             </div>
         </section>
