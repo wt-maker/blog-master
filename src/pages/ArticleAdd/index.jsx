@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Form } from 'antd'
+import { Form, message } from 'antd'
 import InputForm from './inputForm'
 import AreaForm from './areaFrom'
 import ButtonForm from './buttonForm'
@@ -58,6 +58,12 @@ const ArticleAdd = (props) => {
         props.history.push('/article/list')
     }
     const onFinish = values => {
+
+        if (!editContent) {
+            message.error('请输入正文',3)
+            return
+        }
+
         let id = params.get('id')
         values.tag = tags.filter(item => values.tag.includes(item.name)).map(item => item._id)
 

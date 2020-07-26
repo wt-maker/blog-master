@@ -65,6 +65,7 @@ const AreaForm = (props) => {
                             onInput={onContentChange}
                             className='content-child'
                             ref={editRef}
+                            placeholder="请输入markdown标记语言"
                         >
                         </div>
                     </div>

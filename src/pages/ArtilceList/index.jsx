@@ -31,7 +31,6 @@ const ArticleList = (props) => {
     const columns = initColumns(preview, edit, remove, currentPage, ARTICLE_LIST_PAGE_SIZE)
 
     const searchArticle = async (data={}) => {
-
         if (data.keywords) {
             setKeywords(data.keywords)
         }
@@ -76,10 +75,8 @@ const ArticleList = (props) => {
         (async () => await searchArticle({ keywords: values.keywords, tag: values.tag }))()
     }
     const reset = () => {
-        setCurrentPage(1)
-        setKeywords('')
-        setTag('');
-        (async()=>await searchArticle())()
+        (async()=>await searchArticle({ keywords: '', tag: '' }))()
+        form.resetFields()
     }
     const paginateChange = (page) => {
         (async()=>await searchArticle({page}))()
