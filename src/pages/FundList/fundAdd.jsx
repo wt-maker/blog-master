@@ -4,10 +4,13 @@ import { Form, Input } from 'antd'
 import { layout } from './fundList.config'
 const FundAdd = (props) => {
 
-    const { formRef, visible } = props
-
+    const { formRef, visible, id, fund } = props
     useEffect(() => {
         formRef.current.resetFields()
+        if (id) {
+            let res = fund.find(item => item.id===id)
+            formRef.current.setFieldsValue({serialNumber:res.serialNumber, position: res.position})
+        }
     }, [visible])
 
     return (

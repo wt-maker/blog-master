@@ -9,7 +9,6 @@ const { SubMenu, Item } = Menu;
 
 const LeftNav = (props) => {
 
-
     const [collapsed, setCollapsed] = useState(false)
     const [selectedKeys, setSelectedKeys] = useState([])
     const [openKeys, setOpenKeys] = useState([])
@@ -20,8 +19,13 @@ const LeftNav = (props) => {
     const getSelectKey = (list, pathname) => {
         for (let menu of list) {
             if (!menu.child) {
-                if (menu.path === pathname) {
-                    return { selectedKey: menu.key }
+                if (pathname !== '/' && menu.path !== '/' || pathname === '/' && menu.path === '/') {
+                    if (pathname.indexOf('/preview') !== -1) {
+                        return {selectedKey: 'article-list'}
+                    }
+                    if (pathname.indexOf(menu.path) !== -1) {
+                        return { selectedKey: menu.key }
+                    }
                 }
             } else {
                 let result = getSelectKey(menu.child, pathname)

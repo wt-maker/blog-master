@@ -71,7 +71,7 @@ const ArticleAdd = (props) => {
     }
 
     return (
-        <Form {...layout} onFinish={onFinish} form={form}>
+        <Form {...layout} onFinish={onFinish} form={form} className="article-add-form">
             <InputForm tags={tags} />
             <AreaForm editContent={editContent} previewContent={previewContent} setEditContent={setEditContent} setPreviewContent={setPreviewContent} />
             <ButtonForm />

@@ -3,13 +3,13 @@ import dayjs from 'dayjs'
 import MyLink from '../../components/Link'
 import { Tag, Space, Popconfirm } from 'antd'
 
-export const initColumns = (preview, edit, remove) => {
+export const initColumns = (preview, edit, remove, currentPage, pageSize) => {
     let columns = [
         {
             title: 'No.',
             key: 'no',
             width: 20,
-            render: (text, record, dataIndex) => <span>{dataIndex + 1}</span>
+            render: (text, record, dataIndex) => <span>{(currentPage-1) * pageSize + dataIndex + 1}</span>
         },
         {
             title: '标题',
@@ -39,6 +39,7 @@ export const initColumns = (preview, edit, remove) => {
             title: '关键字',
             dataIndex: 'keywords',
             key: 'keywords',
+            sorter: (a, b) => Number(a.keywords) - Number(b.keywords),
             width: 300
         },
         {
@@ -46,6 +47,10 @@ export const initColumns = (preview, edit, remove) => {
             dataIndex: 'update_dt',
             key: 'description',
             width: 250,
+            //sorter: (a, b) => dayjs(a.update_dt).format('YYYY-MM-DD HH:mm:ss') - dayjs(b.update_dt).format('YYYY-MM-DD HH:mm:ss'),
+            sorter: (a, b) => {
+                return dayjs(a.update_dt).unix() - dayjs(b.update_dt).unix()
+            },
             render: (text) => <div>{dayjs(text).format('YYYY-MM-DD HH:mm:ss')}</div>
         },
         {

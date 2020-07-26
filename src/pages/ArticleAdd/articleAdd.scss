@@ -1,3 +1,6 @@
+.article-add-form {
+    margin-top:30px;
+}
 .content-edit, .markdown-body {
     border: 1px solid #a0b3d6;
     background-color: white;
@@ -9,6 +12,7 @@
     .content-child {
         margin: auto;
         padding: 20px;
+        height: 100%;
         outline: 0;
     }
 }

@@ -5,11 +5,12 @@ import { initColumns } from './fundList.config'
 import { getFunds } from '../../utils/api'
 import { PlusCircleOutlined } from '@ant-design/icons';
 import FundAdd from './fundAdd'
-import { addFund, deleteFund } from '../../utils/api'
+import { addFund, deleteFund, updateFund } from '../../utils/api'
 import './fundList.scss'
 
 const FundList = (props) => {
 
+    const [id, setId] = useState('')
     const [fund, setFund] = useState([])
     const [cost, setCost] = useState(0)
     const [income, setIncome] = useState(0)
@@ -23,10 +24,14 @@ const FundList = (props) => {
         setLoading(true)
     }
 
-    const fundColumns = initColumns(remove)
+    const edit = (id) => {
+        setId(id)
+        setVisible(true)
+    }
+
+    const fundColumns = initColumns(remove, edit)
 
     useEffect(() => {
-        console.log("render")
         let unmount = false
         setLoading(true);
         (async () => {
@@ -34,11 +39,11 @@ const FundList = (props) => {
             if (!unmount) {
                 setFund(response.res.fundList)
 
-                setCost(fund.reduce((pre, cur) => {
+                setCost(response.res.fundList.reduce((pre, cur) => {
                     return pre + cur.position
                 }, 0))
 
-                setIncome(fund.reduce((pre, cur) => {
+                setIncome(response.res.fundList.reduce((pre, cur) => {
                     return parseInt(pre + cur.position * parseFloat(cur.applies) * 0.01)
                 }, 0))
             }
@@ -56,23 +61,34 @@ const FundList = (props) => {
 
         formRef.current.validateFields()
             .then(values => {
-                console.log(values)
                 let data = {
                     serialNumber: values.serialNumber,
                     position: values.position
                 };
-                (async () => {
-                    await addFund(data)
-                    setVisible(false)
-                    setLoading(true)
-                })()
+
+                if (id) {
+                    (async () => {
+                        await updateFund(id, data)
+                        setVisible(false)
+                        setId('')
+                        setLoading(true)
+                    })()
+                } else {
+                    (async () => {
+                        await addFund(data)
+                        setVisible(false)
+                        setLoading(true)
+                    })()
+                }
+
+
             }).catch(errorInfo => { })
     }
 
     const handleCancel = () => {
+        setId('')
         setVisible(false)
     }
-
     return (
         <section>
             <Card id="fund-card" title="净值估算" extra={<Button type="primary" onClick={showModal}>
@@ -107,7 +123,7 @@ const FundList = (props) => {
                     onOk={handleOk}
                     onCancel={handleCancel}
                 >
-                    <FundAdd formRef={formRef} visible={visible} />
+                    <FundAdd formRef={formRef} visible={visible} id={id} fund={fund} />
                 </Modal>
             </div>
         </section>

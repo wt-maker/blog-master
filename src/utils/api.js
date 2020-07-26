@@ -12,7 +12,7 @@ export const addTag = (data) => httpRequest('addTag', data, POST)
 export const getTagById = (id) => httpRequest(`getTag/${id}`)
 
 // 获得所有文章
-export const getArticles = () => httpRequest('getArticles')
+export const getArticles = (data={}) => httpRequest('getArticles', data)
 // 修改文章
 export const updateArticle = (id, data) => httpRequest(`updateArticle/${id}`, data, POST)
 // 删除文章

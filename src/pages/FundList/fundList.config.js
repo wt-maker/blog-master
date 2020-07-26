@@ -7,7 +7,7 @@ export const layout = {
     wrapperCol: { span: 20 }
 }
 
-export const initColumns = (remove) => {
+export const initColumns = (remove, edit) => {
     const columns = [
         {
             title: 'No.',
@@ -46,6 +46,8 @@ export const initColumns = (remove) => {
                     <Popconfirm title="确认删除?" onConfirm={() => { remove(record.id)}}>
                         <MyLink>删除</MyLink>
                     </Popconfirm>
+
+                    <MyLink onClick={() => edit(record.id)}>修改</MyLink>
                 </Space>
             ),
         }
