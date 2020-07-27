@@ -77,6 +77,8 @@ const ArticleList = (props) => {
     const reset = () => {
         (async()=>await searchArticle({ keywords: '', tag: '' }))()
         form.resetFields()
+        setTag('')
+        setKeywords('')
     }
     const paginateChange = (page) => {
         (async()=>await searchArticle({page}))()
