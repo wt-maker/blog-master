@@ -50,6 +50,12 @@ export const menuList = [
                 key:'fund-list',
                 path:'/fund/list',
                 icon:'FundOutlined'
+            },
+            {
+                content:'stock详情',
+                key:'stock-detail',
+                path:'/stock/detail',
+                icon:'StockOutlined'
             }
         ]
     }

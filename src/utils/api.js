@@ -36,6 +36,9 @@ export const getFund = (id) => httpRequest(`getFund/${id}`)
 // 用户登录
 export const userLogin = (data) => httpRequest('login', data, POST)
 
+// 查询股票信息
+export const getStockDataById = (id) => httpRequest(`getStock/${id}`)
+
 
 
 

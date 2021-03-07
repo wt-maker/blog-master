@@ -7,6 +7,7 @@ import TagList from '../pages/TagList'
 import FundList from '../pages/FundList'
 import LoginPage from '../pages/Login'
 import Home from '../pages/Home'
+import StockDetail from '../pages/StockDetail'
 import { Route } from 'react-router-dom'
 import loginStatus from '../utils/login'
 import React from 'react'
@@ -43,6 +44,10 @@ export const routes = [
             {
                 path: '/fund/list',
                 component: FundList
+            },
+            {
+                path: '/stock/detail',
+                component: StockDetail
             },
             {
                 path: '/',
