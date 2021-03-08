@@ -8,6 +8,7 @@ import FundList from '../pages/FundList'
 import LoginPage from '../pages/Login'
 import Home from '../pages/Home'
 import StockDetail from '../pages/StockDetail'
+import StockList from '../pages/StockList'
 import { Route } from 'react-router-dom'
 import loginStatus from '../utils/login'
 import React from 'react'
@@ -48,6 +49,10 @@ export const routes = [
             {
                 path: '/stock/detail',
                 component: StockDetail
+            },
+            {
+                path: '/stock/list',
+                component: StockList
             },
             {
                 path: '/',

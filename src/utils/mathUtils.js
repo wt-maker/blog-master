@@ -1,11 +1,11 @@
 export const toDecimal = (number) => {
-  var f = parseFloat(number);
+  let f = parseFloat(number);
   if (isNaN(f)) {
     return false;
   }
-  var f = Math.round(number * 100) / 100;
-  var s = f.toString();
-  var rs = s.indexOf('.');
+  f = Math.round(number * 100) / 100;
+  let s = f.toString();
+  let rs = s.indexOf('.');
   if (rs < 0) {
     rs = s.length;
     s += '.';
@@ -14,4 +14,10 @@ export const toDecimal = (number) => {
     s += '0';
   }
   return s;
+}
+
+export const toPercent = (point) => {
+  let str = Number(point * 100).toFixed(2);
+  str += "%";
+  return str;
 }

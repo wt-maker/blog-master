@@ -56,6 +56,12 @@ export const menuList = [
                 key:'stock-detail',
                 path:'/stock/detail',
                 icon:'StockOutlined'
+            },
+            {
+                content:'stock列表',
+                key:'stock-list',
+                path:'/stock/list',
+                icon:'StockOutlined'
             }
         ]
     }

@@ -39,6 +39,12 @@ export const userLogin = (data) => httpRequest('login', data, POST)
 // 查询股票信息
 export const getStockDataById = (id) => httpRequest(`getStock/${id}`)
 
+// 添加自选
+export const addStock = (data) => httpRequest('addStock', data, POST)
+
+// 获得自选列表
+export const getAllStock = () => httpRequest('getAllStock')
+
 
 
 

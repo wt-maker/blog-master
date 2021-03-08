@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getStockDataById } from '../../utils/api'
-import { Input, Card } from 'antd'
-import { toDecimal } from '../../utils/mathUtils'
+import { getStockDataById, addStock } from '../../utils/api'
+import { Input, Card, Button } from 'antd'
+import { toDecimal, toPercent } from '../../utils/mathUtils'
 import './stockDetail.scss'
 
 const StockDetail = () => {
@@ -43,17 +43,21 @@ const StockDetail = () => {
   const onSearchStockById = () => {
     (async () => {
       let response = await getStockDataById(stockNumber)
-      setStockDetail(response.res.data.stockDetail)
+      if (response.res) {
+        setStockDetail(response.res.data.stockDetail)
+      }
     })()
   }
 
-  function toPercent(point) {
-    if (point == 0) {
-      return 0;
-    }
-    var str = Number(point * 100).toFixed();
-    str += "%";
-    return str;
+  const addToMyLike = () => {
+    let data = {
+      stockNumber
+    };
+
+    (async () => {
+      let res = await addStock(data)
+      console.log(res)
+    })()
   }
 
   return (
@@ -72,10 +76,10 @@ const StockDetail = () => {
         {
           loading ?
             (<div>正在加载</div>) :
-            (<Card title={stockDetail.name} style={{ width: 350 }}>
+            (<Card title={stockDetail.name} style={{ width: 350 }} extra={<Button type="link" onClick={addToMyLike} shape="circle">添加自选</Button>}>
               <p>价格 | {toDecimal(stockDetail.currentPrice)} {`(${stockDetail.currentTime})`}</p>
               <hr />
-              <p>涨跌幅 | {toDecimal(stockDetail.currentPrice) - toDecimal(stockDetail.closePrice)}</p>
+              <p>涨跌幅 | {toPercent((stockDetail.currentPrice - stockDetail.closePrice) / stockDetail.closePrice)}</p>
               <hr />
               <p>今开 | {toDecimal(stockDetail.openPrice)}</p>
               <hr />
